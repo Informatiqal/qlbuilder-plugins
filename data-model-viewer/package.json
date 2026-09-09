@@ -1,0 +1,40 @@
+{
+    "name": "@informatiqal/qlbuilder-dmv",
+    "version": "1.0.0",
+    "description": "qlBuilder plugin to export app's data model as an image (png)",
+    "author": {
+        "email": "info@informatiqal.com",
+        "name": "Informatiqal @informatiqal",
+        "url": "https://informatiqal.com"
+    },
+    "type": "module",
+    "main": "index.js",
+    "module": "index.js",
+    "preferGlobal": true,
+    "files": [
+        "!.env",
+        "dist",
+        "funding.yml",
+        "CHANGELOG.md",
+        "README.md"
+    ],
+    "scripts": {},
+    "homepage": "https://github.com/informatiqal/qlbuilder-plugins/tree/master/data-model-viewer",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/informatiqal/qlbuilder-plugins.git"
+    },
+    "keywords": [
+        "qlik",
+        "sense",
+        "qlbuilder",
+        "plugins"
+    ],
+    "license": "MIT",
+    "engines": {
+        "node": ">=16.0"
+    },
+    "dependencies": {
+        "playwright-core": "^1.63.0"
+    }
+}
