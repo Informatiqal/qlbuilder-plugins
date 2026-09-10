@@ -11,6 +11,11 @@
     "main": "index.js",
     "module": "index.js",
     "preferGlobal": true,
+    "private": false,
+    "license": "MIT",
+    "publishConfig": {
+        "access": "public"
+    },
     "files": [
         "!.env",
         "dist",
@@ -30,9 +35,8 @@
         "qlbuilder",
         "plugins"
     ],
-    "license": "MIT",
     "engines": {
-        "node": ">=16.0"
+        "node": ">=20.0"
     },
     "dependencies": {
         "playwright-core": "^1.63.0"
