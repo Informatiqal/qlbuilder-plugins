@@ -1,0 +1,50 @@
+{
+    "name": "@informatiqal/qlbuilder-config-edit",
+    "version": "0.0.1",
+    "description": "qlBuilder plugin for managing .qlBuilder.yaml config file",
+    "author": {
+        "email": "info@informatiqal.com",
+        "name": "Informatiqal @informatiqal",
+        "url": "https://informatiqal.com"
+    },
+    "type": "module",
+    "main": "index.js",
+    "module": "index.js",
+    "preferGlobal": true,
+    "private": false,
+    "license": "MIT",
+    "publishConfig": {
+        "access": "public"
+    },
+    "files": [
+        "!.env",
+        "dist",
+        "funding.yml",
+        "CHANGELOG.md",
+        "README.md"
+    ],
+    "scripts": {
+        "build": "set NODE_ENV=prod && rollup -c"
+    },
+    "homepage": "https://github.com/informatiqal/qlbuilder-plugins/tree/master/config-edit",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/informatiqal/qlbuilder-plugins.git"
+    },
+    "keywords": [
+        "qlik",
+        "sense",
+        "qlbuilder",
+        "plugins"
+    ],
+    "engines": {
+        "node": ">=20.0"
+    },
+    "devDependencies": {
+        "@rollup/plugin-commonjs": "^29.0.3",
+        "@rollup/plugin-node-resolve": "^16.0.3",
+        "@rollup/plugin-replace": "^6.0.3",
+        "js-yaml": "^5.4.3",
+        "rollup-plugin-delete": "^3.0.2"
+    }
+}
