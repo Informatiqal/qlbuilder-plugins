@@ -13,7 +13,7 @@ export const meta = {
         name: "add",
         description: `Add new environment to ".qlbuilder.yaml"`,
         options: [],
-        aliases: [],
+        aliases: ["ins"],
     },
     options: {
         requireConnection: false,

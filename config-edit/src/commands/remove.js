@@ -17,7 +17,7 @@ export const meta = {
                 description: "Auto confirm deletion",
             },
         ],
-        aliases: [],
+        aliases: ["rem", "del", "delete"],
     },
     options: {
         requireConnection: false,
