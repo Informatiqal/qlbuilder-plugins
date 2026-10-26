@@ -1,6 +1,6 @@
 import { readFileSync } from "fs";
 import { homedir } from "os";
-import { load as yamlLoad, dump as yamlDump } from "js-yaml";
+import { load as yamlLoad } from "js-yaml";
 
 export function isEncrypted(configContent) {
     const marker = "111111";
