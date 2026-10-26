@@ -23,6 +23,8 @@ export const meta = {
 };
 
 export async function action(args) {
+    const print = new args.tools.print();
+
     // if no env is provided then print the whole config
     if (!args.command.options["env"]) {
         const { content } = await loadConfig(
@@ -42,8 +44,8 @@ export async function action(args) {
         true,
     );
 
-    if (!envName) {
-        console.log(`\nEnvironment "${envName}" was not found`);
+    if (!content[envName]) {
+        print.error(`\nEnvironment "${envName}" was not found`);
         return;
     } else {
         let envData = {};
