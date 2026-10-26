@@ -9,3 +9,4 @@ Follow the [official documentation](https://docs.informatiqal.com/qlBuilder/plug
 ## Plugins list
 
 - [data model viewer](./data-model-viewer/README.md) - export Qlik's app data model viewer as `png` image
+- [config editor](./config-edit/README.md) - manage the home folder config (`.qlbuilder.yaml`) - add/remove/update environments and their properties
