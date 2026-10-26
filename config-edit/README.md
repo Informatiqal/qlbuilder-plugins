@@ -14,6 +14,8 @@ qlbuilder config
 
 ## add
 
+Aliases: `ins`
+
 Adds brand environment to `.qlbuilder.yaml`
 
 ```
@@ -41,6 +43,8 @@ The command will ask for:
 
 ## remove
 
+Aliases: `rem`, `del`, `delete`
+
 Remove environment from `.qlbuilder.yaml`
 
 ```
@@ -54,6 +58,8 @@ qlbuilder config remove --env some-env
 ```
 
 ## update
+
+Aliases: `upd`, `edit`
 
 Update existing environment - name or property
 
