@@ -1,6 +1,6 @@
 {
     "name": "@informatiqal/qlbuilder-config-edit",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "qlBuilder plugin for managing .qlBuilder.yaml config file",
     "author": {
         "email": "info@informatiqal.com",

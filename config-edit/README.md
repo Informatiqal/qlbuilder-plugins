@@ -79,3 +79,13 @@ The command will ask for:
 - what to update:
     - env name
     - property and its new value
+
+## list
+
+Aliases: `ls`
+
+Print the names of all available environments
+
+```
+qlbuilder config list
+```

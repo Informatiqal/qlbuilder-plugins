@@ -2,6 +2,7 @@ import { meta as viewMeta, action as viewAction } from "./commands/view";
 import { meta as addMeta, action as addAction } from "./commands/add";
 import { meta as removeMeta, action as removeAction } from "./commands/remove";
 import { meta as updateMeta, action as updateAction } from "./commands/update";
+import { meta as listeMeta, action as listAction } from "./commands/list";
 
 export const meta = {
     command: {
@@ -26,6 +27,10 @@ export const meta = {
         {
             meta: updateMeta,
             action: updateAction,
+        },
+        {
+            meta: listeMeta,
+            action: listAction,
         },
     ],
     options: {
