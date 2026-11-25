@@ -1,0 +1,51 @@
+{
+    "name": "@informatiqal/qlbuilder-reload-task-logs",
+    "version": "1.0.0",
+    "description": "qlBuilder plugin for view/download execution result logs",
+    "author": {
+        "email": "info@informatiqal.com",
+        "name": "Informatiqal @informatiqal",
+        "url": "https://informatiqal.com"
+    },
+    "type": "module",
+    "main": "index.js",
+    "module": "index.js",
+    "preferGlobal": true,
+    "private": false,
+    "license": "MIT",
+    "publishConfig": {
+        "access": "public"
+    },
+    "files": [
+        "!.env",
+        "dist",
+        "funding.yml",
+        "CHANGELOG.md",
+        "README.md"
+    ],
+    "scripts": {
+        "build": "set NODE_ENV=prod && rollup -c"
+    },
+    "homepage": "https://github.com/informatiqal/qlbuilder-plugins/tree/master/reload-task-logs",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/informatiqal/qlbuilder-plugins.git"
+    },
+    "keywords": [
+        "qlik",
+        "sense",
+        "qlbuilder",
+        "plugins"
+    ],
+    "engines": {
+        "node": ">=20.0"
+    },
+    "devDependencies": {
+        "@rollup/plugin-commonjs": "^29.0.3",
+        "@rollup/plugin-json": "^6.1.0",
+        "@rollup/plugin-node-resolve": "^16.0.3",
+        "@rollup/plugin-replace": "^6.0.3",
+        "qlik-repo-api": "^0.18.1",
+        "rollup-plugin-delete": "^3.0.2"
+    }
+}
