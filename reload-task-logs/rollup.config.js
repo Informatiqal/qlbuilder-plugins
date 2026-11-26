@@ -12,7 +12,7 @@ export default {
     output: {
         file: "dist/index.js",
         format: "es",
-        sourcemap: process.env.NODE_ENV == "prod" ? false : true,
+        sourcemap: process.env.NODE_ENV == "prod" ? true : false,
     },
     external: ["fs", "os", "https", "readline"],
     plugins: [

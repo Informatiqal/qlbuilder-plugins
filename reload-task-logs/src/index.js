@@ -25,9 +25,19 @@ export async function action(args) {
     const print = new args.tools.print();
     const prompts = args.tools.prompts;
 
+    if (args.environment.host.indexOf("qlikcloud") > -1) {
+        print.error("Qlik Cloud is not supported for this command ... yet");
+        return;
+    }
+
     const hostComponents = args.environment.host
         .split("/")
         .filter((a) => a != "");
+
+    if (hostComponents.length < 2 || hostComponents.length > 3) {
+        print.error("Unsupported host name format");
+        return;
+    }
 
     const repoConfig = {
         host: hostComponents[1],
@@ -41,14 +51,20 @@ export async function action(args) {
 
     const repoApi = new QlikRepoApi.client(repoConfig);
 
-    const availableTasks = await getReloadTasksForAppId(
-        repoApi,
-        args.environment.appId,
-    );
-    if (availableTasks.length == 0) {
-        print.error(
-            `No reload tasks found for appId ${args.environment.appId}`,
+    let availableTasks = [];
+    try {
+        availableTasks = await getReloadTasksForAppId(
+            repoApi,
+            args.environment.appId,
         );
+        if (availableTasks.length == 0) {
+            print.error(
+                `No reload tasks found for appId ${args.environment.appId}`,
+            );
+            return;
+        }
+    } catch (e) {
+        print.error(`Error while retrieving the reload tasks\n${e.message}  `);
         return;
     }
 
@@ -64,12 +80,18 @@ export async function action(args) {
         (t) => t.details.id == selectedTaskId,
     )[0];
 
-    const availableExecutionResults = await getExecutionResultsForTask(
-        repoApi,
-        selectedTaskId,
-    );
-    if (availableExecutionResults.length == 0) {
-        print.error("No execution results for the selected task");
+    let availableExecutionResults = [];
+    try {
+        availableExecutionResults = await getExecutionResultsForTask(
+            repoApi,
+            selectedTaskId,
+        );
+        if (availableExecutionResults.length == 0) {
+            print.error("No execution results for the selected task");
+            return;
+        }
+    } catch (e) {
+        print.error(`Error retrieving the execution results\n${e.message}`);
         return;
     }
 
@@ -111,58 +133,93 @@ export async function action(args) {
         (t) => t.details.id == selectedExecutionResultId,
     )[0];
 
-    const reloadLogFileReference = await getLogFileReference(
-        selectedTask,
-        selectedExecutionResult.details.fileReferenceID,
-    );
-
-    const logContent = await getReloadLog(
-        repoApi,
-        reloadLogFileReference.value,
-    );
-
-    let filePath = "";
-    if (!args.command.options.hasOwnProperty("output")) {
-        const fileName = selectedExecutionResult.details.scriptLogLocation
-            .split("\\")
-            .at(-1);
-        filePath = `./${fileName}`;
-    } else {
-        filePath = args.command.options.output;
+    let reloadLogFileReference = {};
+    try {
+        reloadLogFileReference = await getLogFileReference(
+            selectedTask,
+            selectedExecutionResult.details.fileReferenceID,
+        );
+    } catch (e) {
+        print.error(`Error retrieving the log file reference\n${e.message}`);
+        return;
     }
 
-    writeFileSync(filePath, logContent.data);
-    print.plain("");
-    print.ok(`Reload log saved in ${filePath}`);
-    return;
+    let logContent = {};
+    try {
+        logContent = await getReloadLog(repoApi, reloadLogFileReference.value);
+    } catch (e) {
+        print.error(`Error getting the log content\n${e.message}`);
+        return;
+    }
+
+    let filePath = "";
+    try {
+        if (!args.command.options.hasOwnProperty("output")) {
+            const fileName = selectedExecutionResult.details.scriptLogLocation
+                .split("\\")
+                .at(-1);
+            filePath = `./${fileName}`;
+        } else {
+            filePath = args.command.options.output;
+        }
+    } catch (e) {
+        print.error(`Error defining the file name\n${e.message}`);
+        return;
+    }
+
+    try {
+        writeFileSync(filePath, logContent.data);
+        print.plain("");
+        print.ok(`Reload log saved in ${filePath}`);
+        return;
+    } catch (e) {
+        print.error(`Error while saving the log\n${e.message}`);
+        return;
+    }
 }
 
 async function getReloadTasksForAppId(repoApi, appId) {
-    const tasks = await repoApi.reloadTasks.getFilter({
-        filter: `app.id eq ${appId}`,
-    });
+    const tasks = await repoApi.reloadTasks
+        .getFilter({
+            filter: `app.id eq ${appId}`,
+        })
+        .catch((e) => {
+            throw new Error(e);
+        });
 
     return tasks;
 }
 
 async function getExecutionResultsForTask(repoApi, taskId) {
-    const executionResults = await repoApi.executionResults.getFilter({
-        filter: `taskID eq ${taskId}`,
-    });
+    const executionResults = await repoApi.executionResults
+        .getFilter({
+            filter: `taskID eq ${taskId}`,
+        })
+        .catch((e) => {
+            throw new Error(e);
+        });
 
     return executionResults;
 }
 
 async function getLogFileReference(reloadTask, fileReferenceId) {
-    const reloadLog = await reloadTask.scriptLogGet({ fileReferenceId });
+    const reloadLog = await reloadTask
+        .scriptLogGet({ fileReferenceId })
+        .catch((e) => {
+            throw new Error(e);
+        });
 
     return reloadLog;
 }
 
 async function getReloadLog(repoApi, reloadLogFileReference) {
-    const logContent = await repoApi.repoClient.Get(
-        `download/reloadtask/${reloadLogFileReference}/${reloadLogFileReference}.log`,
-    );
+    const logContent = await repoApi.repoClient
+        .Get(
+            `download/reloadtask/${reloadLogFileReference}/${reloadLogFileReference}.log`,
+        )
+        .catch((e) => {
+            throw new Error(e);
+        });
 
     return logContent;
 }

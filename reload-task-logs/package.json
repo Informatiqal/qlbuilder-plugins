@@ -1,6 +1,6 @@
 {
     "name": "@informatiqal/qlbuilder-reload-task-logs",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "qlBuilder plugin for view/download execution result logs",
     "author": {
         "email": "info@informatiqal.com",
